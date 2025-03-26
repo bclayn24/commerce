@@ -4,5 +4,9 @@
 ## Запуск:
 
 1. ```bash
+   go mod tidy
+   ```
+
+2. ```bash
    go run main.go
    ```
