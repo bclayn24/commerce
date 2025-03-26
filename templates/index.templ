@@ -1,0 +1,32 @@
+package templates
+
+import "commerce/db"
+import "fmt"
+
+templ Index(listings []db.Listing) {
+	@Base("Commerce") {
+		for _, listing := range listings {
+			if listing.Active.Bool == true {
+				@ListingItem(listing)
+			}
+		}
+	}
+}
+
+templ ListingItem(listing db.Listing) {
+	<div class="listing-item">
+		<div class="listing-item-image">
+			<img src={ listing.ImageUrl }/>
+		</div>
+		<div class="listing-item-info">
+			<h1><a href={ templ.URL("/listing/" + fmt.Sprintf("%d", listing.ID)) }>{ listing.Title }</a></h1>
+			<p>{ fmt.Sprintf("Price: $%.02f", listing.StartingPrice) }</p>
+			if listing.Description.Valid {
+				<p>{ listing.Description.String }</p>
+			}
+			<p>
+				Created { listing.CreatedAt.Time.Format("Jan. 02, 2006, 3:04 pm") }
+			</p>
+		</div>
+	</div>
+}

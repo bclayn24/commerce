@@ -1,0 +1,30 @@
+package templates
+
+import "commerce/db"
+import "fmt"
+
+templ Categories(categories []db.Category) {
+	@Base("Categories") {
+		for _, category := range categories {
+			@CategoryItem(category)
+		}
+	}
+}
+
+templ CategoryItem(category db.Category) {
+	<div>
+		<a href={ templ.URL("/categories/" + fmt.Sprintf("%d", category.ID)) }>{ category.Title }</a>
+	</div>
+}
+
+templ CategoryListings(category db.Category, listings []db.Listing) {
+	@Base(category.Title) {
+		if len(listings) == 0 {
+			<div>No listings in this category</div>
+		} else {
+			for _, listing := range listings {
+				@ListingItem(listing)
+			}
+		}
+	}
+}

@@ -1,0 +1,36 @@
+body {
+    padding: 10px;
+}
+
+.listing-item {
+    margin: 5px 0px;
+    padding: 5px;
+    clear: both;
+    width: 100%;
+    border: 1px solid gray;
+    display: inline-block;
+}
+
+.listing-item-image {
+    float: left;
+    width: 35%;
+    padding: 5px;
+}
+
+.listing-item-image img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+
+.listing-item-info {
+    float: left;
+}
+
+.listing-image {
+    height: 200px;
+}
+
+.listing-image img {
+    height: 100%;
+}

@@ -1,0 +1,11 @@
+package templates
+
+import "commerce/db"
+
+templ Watchlist(listings []db.Listing) {
+	@Base("Watchlist") {
+		for _, listing := range listings {
+			@ListingItem(listing)
+		}
+	}
+}
