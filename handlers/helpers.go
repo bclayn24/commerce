@@ -23,8 +23,6 @@ func createSession(userId int64, c echo.Context) error {
 		return err
 	}
 
-	// Finally, we set the client cookie for "session_token" as the session token we just generated
-	// we also set an expiry time of 120 seconds
 	c.SetCookie(&http.Cookie{
 		Name:    "session_token",
 		Value:   sessionToken,

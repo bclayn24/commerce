@@ -19,10 +19,8 @@ func Session(next echo.HandlerFunc) echo.HandlerFunc {
 
 		if err != nil {
 			if err == http.ErrNoCookie {
-				// If the cookie is not set, return an unauthorized status
 				return next(c)
 			}
-			// For any other type of error, return a bad request status
 			return next(c)
 		}
 		token := tokenCookie.Value
@@ -31,12 +29,9 @@ func Session(next echo.HandlerFunc) echo.HandlerFunc {
 		userSession, err := db.Q.GetSession(ctx, token)
 
 		if err != nil {
-			// If the session token is not present in session map, return an unauthorized error
 			return next(c)
 		}
 
-		// If the session is present, but has expired, we can delete the session, and return
-		// an unauthorized status
 		if userSession.IsExpired() {
 			db.Q.DeleteSession(ctx, token)
 			return next(c)

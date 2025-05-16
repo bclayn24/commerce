@@ -24,7 +24,6 @@ func RegisterHandler(c echo.Context) error {
 			return c.String(http.StatusBadRequest, "username already exists")
 		}
 
-		// hash password
 		hash := sha256.Sum256([]byte(password))
 		hashStr := fmt.Sprintf("%x", hash)
 
@@ -34,6 +33,7 @@ func RegisterHandler(c echo.Context) error {
 		})
 
 		if err != nil {
+			fmt.Println(err)
 			return c.String(http.StatusInternalServerError, "failed to create user")
 		}
 

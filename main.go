@@ -8,7 +8,6 @@ import (
 	"log"
 
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -23,14 +22,14 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	db.Q = db.New(database)
 
 	e := echo.New()
 	e.Debug = true
 	e.Static("/static", "dist")
 
-	e.Use(middleware.Logger())
+	e.Use(middlewares.Logger())
 	e.Use(middlewares.Session)
 
 	e.GET("/", handlers.IndexHandler)
