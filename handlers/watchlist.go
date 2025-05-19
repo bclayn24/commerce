@@ -3,6 +3,7 @@ package handlers
 import (
 	"commerce/db"
 	"commerce/templates"
+	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
@@ -11,7 +12,6 @@ import (
 func WatchlistHandler(c echo.Context) error {
 	ctx := c.Request().Context()
 	listings, err := db.Q.GetUserWatchlist(ctx, ctx.Value("user").(db.User).ID)
-
 	if err != nil {
 		return err
 	}
@@ -27,7 +27,6 @@ func AddToWatchlistHandler(c echo.Context) error {
 	}
 
 	user, ok := ctx.Value("user").(db.User)
-
 	if !ok {
 		return echo.ErrUnauthorized
 	}
@@ -41,7 +40,7 @@ func AddToWatchlistHandler(c echo.Context) error {
 		return err
 	}
 
-	return c.Redirect(302, "/watchlist")
+	return c.Redirect(http.StatusFound, "/watchlist")
 }
 
 func RemoveFromWatchlistHandler(c echo.Context) error {
@@ -52,19 +51,16 @@ func RemoveFromWatchlistHandler(c echo.Context) error {
 	}
 
 	user, ok := ctx.Value("user").(db.User)
-
 	if !ok {
 		return echo.ErrUnauthorized
 	}
 
-	err = db.Q.RemoveFromWatchlist(ctx, db.RemoveFromWatchlistParams{
+	if err = db.Q.RemoveFromWatchlist(ctx, db.RemoveFromWatchlistParams{
 		UserID:    user.ID,
 		ListingID: int64(listingID),
-	})
-
-	if err != nil {
+	}); err != nil {
 		return err
 	}
 
-	return c.Redirect(302, "/watchlist")
+	return c.Redirect(http.StatusFound, "/watchlist")
 }

@@ -3,13 +3,13 @@ package handlers
 import (
 	"commerce/db"
 	"errors"
+	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
 
 func BidHandler(c echo.Context) error {
-
 	ctx := c.Request().Context()
 
 	listing_id, err := strconv.Atoi(c.FormValue("listing_id"))
@@ -49,5 +49,5 @@ func BidHandler(c echo.Context) error {
 		}
 	}
 
-	return c.Redirect(302, "/listing/"+c.FormValue("listing_id"))
+	return c.Redirect(http.StatusFound, "/listing/"+c.FormValue("listing_id"))
 }

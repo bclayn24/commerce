@@ -79,6 +79,7 @@ func EditListingHandler(c echo.Context) error {
 
 		return c.Redirect(http.StatusFound, "/")
 	}
+
 	isInWatchlist := false
 	return templates.Render(c, templates.EditListing(categories, listing, owner, category, bids, isInWatchlist))
 }

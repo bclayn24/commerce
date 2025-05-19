@@ -11,6 +11,8 @@ import (
 )
 
 func LoginHandler(c echo.Context) error {
+	ctx := c.Request().Context()
+
 	if c.Request().Method == "POST" {
 		username := c.FormValue("username")
 		password := c.FormValue("password")
@@ -18,11 +20,7 @@ func LoginHandler(c echo.Context) error {
 			return c.String(400, "username or password is empty")
 		}
 
-		ctx := c.Request().Context()
-
-		// Get the expected password from our in memory map
 		user, err := db.Q.GetUser(ctx, username)
-
 		hashStr := fmt.Sprintf("%x", sha256.Sum256([]byte(password)))
 
 		if err != nil || user.Password != hashStr {

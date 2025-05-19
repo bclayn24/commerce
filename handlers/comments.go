@@ -10,7 +10,6 @@ import (
 
 func CommentHandler(c echo.Context) error {
 	ctx := c.Request().Context()
-
 	comment := c.FormValue("comment_text")
 
 	listing_id, err := strconv.Atoi(c.FormValue("listing_id"))
@@ -30,5 +29,5 @@ func CommentHandler(c echo.Context) error {
 		Comment:   comment,
 	})
 
-	return c.Redirect(302, "/listing/"+c.FormValue("listing_id"))
+	return c.Redirect(http.StatusFound, "/listing/"+c.FormValue("listing_id"))
 }

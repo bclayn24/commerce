@@ -4,6 +4,7 @@ import (
 	"commerce/db"
 	"commerce/models"
 	"commerce/templates"
+	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
@@ -83,5 +84,5 @@ func CloseListingHandler(c echo.Context) error {
 		return err
 	}
 
-	return c.Redirect(302, "/")
+	return c.Redirect(http.StatusFound, "/")
 }

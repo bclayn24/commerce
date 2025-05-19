@@ -11,6 +11,7 @@ import (
 )
 
 func RegisterHandler(c echo.Context) error {
+	ctx := c.Request().Context()
 	if c.Request().Method == "POST" {
 		username := c.FormValue("username")
 		password := c.FormValue("password")
@@ -19,7 +20,6 @@ func RegisterHandler(c echo.Context) error {
 			return c.String(http.StatusBadRequest, "username or password is empty")
 		}
 
-		ctx := c.Request().Context()
 		if user, err := db.Q.GetUser(ctx, username); err == nil && user.Username == username {
 			return c.String(http.StatusBadRequest, "username already exists")
 		}

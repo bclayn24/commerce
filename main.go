@@ -8,6 +8,7 @@ import (
 	"log"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -30,6 +31,7 @@ func main() {
 	e.Static("/static", "dist")
 
 	e.Use(middlewares.Logger())
+	e.Use(middleware.Recover())
 	e.Use(middlewares.Session)
 
 	e.GET("/", handlers.IndexHandler)
@@ -54,5 +56,5 @@ func main() {
 	e.POST("/bid", handlers.BidHandler)
 	e.POST("/comment", handlers.CommentHandler)
 
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":1323"))
 }
